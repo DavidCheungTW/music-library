@@ -1,6 +1,9 @@
 {
   "name": "music-library",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18"
+  },
   "description": "A little info about your project and/ or overview that explains **what** the project is about.",
   "main": "index.js",
   "scripts": {
