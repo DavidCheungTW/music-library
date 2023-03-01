@@ -10,12 +10,16 @@ if (NODE_ENV != 'production') {
 
   const envFile = args === 'test' ? '../.env.test' : '../.env';
 
+  console.log('>>>>>>>>>>>>> envFile=', envFile);
+
   require('dotenv').config({
     path: path.join(__dirname, envFile),
   });
 }
 
 const { PGUSER, PGHOST, PGPASSWORD, PGDATABASE, PGPORT } = process.env;
+
+console.log('>>>>>>>>>>>PGDATABASE=', PGDATABASE);
 
 const config = {
   database: PGDATABASE,

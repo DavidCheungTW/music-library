@@ -3,9 +3,9 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.status(200).json({ result: 'hello world!' });
-});
+// app.get('/', (req, res) => {
+//   res.status(200).json({ result: 'hello world!' });
+// });
 
 // $$$ my testing $$$
 // app.get('/hello', (req, res) => {
