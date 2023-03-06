@@ -1,103 +1,132 @@
 ## Project title
 
-Music Library - exercise for SQL, databases and **CRUD** operations.
+Music Library - an API exercise for Express, Postgres database and **CRUD** operations.
 
-## Motivation
+- [Music library deployment](https://dashboard.render.com/)
 
-- Learn how to design test for each operation.
-- Learn how to route user request to handler.
-- Learn how to handle error of user request.
+## Project setup
 
-## What will learn from this exercise
+### Environment setup
 
-### API flow of HTML request:
+1. Docker - run
+   ```
+   docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=password -d postgres
+   ```
+2. pgAdmin - setup database serviers 'postgres'
+3. Postman
 
-| API flow           | Purpose                                   |
-| ------------------ | ----------------------------------------- |
-| index.js           | process config env                        |
-| src/app.js         | process routers                           |
-| src/routes/\*      | process get/post/put/patch controllers    |
-| src/controllers/\* | process back-end controllers and response |
+### API setup
 
-### Database setup for each test:
+1. change to working directory, i.e. /projects
+2. run
+   ```
+   git clone https://github.com/DavidCheungTW/music-library.git
+   cd music-library
+   npm install
+   ```
+3. Environment variables
 
-To ensure tests have a fresh database each time they run.
+   Create a `.env` file for postman test:
 
-```
-// package.json
- ...
- "scripts": {
-    "migrate": "node scripts/migrate.js",
-    "prestart": "node scripts/create-database.js && npm run migrate",
-    "start": "nodemon -r dotenv/config index.js",
-    "pretest": "node scripts/create-database.js test && npm run migrate test",
-    "test": "mocha tests/**/*.js --exit --recursive --timeout 60000 --file ./scripts/test-setup.js",
-    "posttest": "node scripts/drop-database.js test"
-  },
-  ...
-```
+   ```
+    PGUSER=postgres
+    PGHOST=localhost
+    PGPASSWORD=password
+    PGDATABASE=music_library_dev
+    PGPORT=5432
+    PORT=3000
+   ```
 
-### A top-level directory layout
+   Create a `.env.test` file for `npm test`:
 
-    .
-    ├── migrations         # Setup databases before each test
-    ├── scripts            # Scripts for migrations
-    ├── src
-    │      ├── routes      # Source of routers
-    │      ├── controllers # Source of request handlers
-    │      └── db          # define query of pg
-    ├── tests              # test files for requests
-    └── README.md
-
-## Installation
-
-```
-$ git clone https://github.com/DavidCheungTW/music-library.git
-$ cd music-library
-$ npm install
-```
-
-## API Reference
-
-```
-// package.json
-...
-  "devDependencies": {
-    "chai": "^4.3.7",
-    "dotenv": "^16.0.3",
-    "mocha": "^10.2.0",
-    "nodemon": "^2.0.20",
-    "supertest": "^6.3.3"
-  },
-  ...
-```
+   ```
+    PGUSER=postgres
+    PGHOST=localhost
+    PGPASSWORD=password
+    PGDATABASE=music_library_api_test
+    PGPORT=5432
+    PORT=3000
+   ```
 
 ## Tests
 
-```
-open terminal and go to directory 'music-library', then
-$ npm test
-```
+### Test by node
 
-## How to use?
+1. use `music_library_api_test` database
+2. change to music-library directory
+3. run `npm test` to execute the test
+4. add test case to \*.test.js files
+5. run `npm test` to execute the test again
 
-From this exercise, you may learn how to handle request for CRUD operation to relational database.
+### Test by Postman
 
-## Contribute
+1. use `music_library_dev` database
+2. change to music-library directory
+3. run `npm start` to start testing
+4. input test cases in Postman and check results (remark: suggest to use \*.test.js test cases first, then you can add your own test case)
+5. Example:
 
-Big welcome to your [contribution](mailto:davidcheungtw@gmail.com?subject=Contribution_to_Music_Library).
+   Add Artist record:
+
+   POST : http://localhost:3000/artists
+
+   BODY/RAW/JSON :
+   `{ "name": "Tame Impala", "genre": "rock" }`
+
+   Response Body:
+
+   ```
+   {
+   "id": 1,
+   "name": "Tame Impala",
+   "genre": "rock"
+   }
+   ```
+
+   Add Album record:
+
+   POST : http://localhost:3000/artists/1/albums
+
+   BODY/RAW/JSON :`{"name": "Tame Impala Album","year": 1968}`
+
+   Response Body:
+
+   ```
+   {
+   "id": 1,
+   "name": "Tame Impala Album",
+   "year": 1968,
+   "artistid": 1
+   }
+   ```
+
+## Learning npm modules
+
+For development libraries
+
+- [dotenv](https://github.com/motdotla/dotenv)
+- [nodemon](https://www.npmjs.com/package/nodemon)
+
+For production libraries
+
+- [pg](https://node-postgres.com/)
+- [postgres-migrations](https://www.npmjs.com/package/postgres-migrations)
+- [swagger](https://dailyspaghetticode.com/adding-swagger-to-your-expressjs-api/)
+
+  Others learning
+
+- [race condition](https://www.youtube.com/watch?v=KF8dF1QS8Go)
+- [SQL Injection](https://www.veracode.com/blog/secure-development/how-prevent-sql-injection-nodejs)
+- [testing with github actions](https://docs.github.com/en/actions/quickstart)
+- [render doc](https://render.com/docs/)
 
 ## Credits
 
 ### Recommended Reading List
 
-- [Node-postgres](https://node-postgres.com/)
 - [Docker in 5 minutes](https://www.youtube.com/watch?v=_dfLOzuIg2o)
 - [Docker installation](https://docs.docker.com/get-docker/)
 - [pgAdmin4 installation](https://www.pgadmin.org/download/) (Remark:Just install **macOS** for Mac computer)
-- [Documentation - Dotenv](https://github.com/motdotla/dotenv/blob/master/README.md)
-- [Documentation - Nodemon](https://www.npmjs.com/package/nodemon)
-- [Preventing SQL Injection in Node.js](https://www.veracode.com/blog/secure-development/how-prevent-sql-injection-nodejs)
 
 ## License
 
