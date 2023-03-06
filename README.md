@@ -100,6 +100,10 @@ Music Library - an API exercise for Express, Postgres database and **CRUD** oper
    }
    ```
 
+### Test by Swagger
+
+- http://localhost:3000/swagger/
+
 ## Learning npm modules
 
 For development libraries
