@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const controllers = require('../controllers/artist');
+const {
+  createArtist,
+  readArtist,
+  readSingleArtist,
+  updateArtist,
+  patchArtist,
+  deleteArtist,
+} = require('../controllers/artist');
 
 // $$$ my solution $$$
 // router.post('/artists', (req, res) => {
@@ -34,12 +41,6 @@ const controllers = require('../controllers/artist');
  *      responses:
  *          201:
  *              description: Artist created
- */
-router.post('/artists', controllers.createArtist);
-
-/**
- * @swagger
- * /artists:
  *  get:
  *      tags:
  *          - artists
@@ -48,7 +49,7 @@ router.post('/artists', controllers.createArtist);
  *          200:
  *              description: All artists were retrieved
  */
-router.get('/artists', controllers.readArtist);
+router.route('/artists').post(createArtist).get(readArtist);
 
 /**
  * @swagger
@@ -69,12 +70,6 @@ router.get('/artists', controllers.readArtist);
  *              description: Artist that was retrieved
  *          404:
  *              description: Artist is not found
- */
-router.get('/artists/:id', controllers.readSingleArtist);
-
-/**
- * @swagger
- * /artists/{artistId}:
  *  put:
  *      tags:
  *          - artists
@@ -105,12 +100,6 @@ router.get('/artists/:id', controllers.readSingleArtist);
  *              description: Artist updated
  *          404:
  *              description: Artist is not found
- */
-router.put('/artists/:id', controllers.updateArtist);
-
-/**
- * @swagger
- * /artists/{artistId}:
  *  patch:
  *      tags:
  *          - artists
@@ -141,12 +130,6 @@ router.put('/artists/:id', controllers.updateArtist);
  *              description: Artist patched
  *          404:
  *              description: Artist is not found
- */
-router.patch('/artists/:id', controllers.patchArtist);
-
-/**
- * @swagger
- * /artists/{artistId}:
  *  delete:
  *      tags:
  *          - artists
@@ -164,6 +147,11 @@ router.patch('/artists/:id', controllers.patchArtist);
  *          404:
  *              description: Artist is not found
  */
-router.delete('/artists/:id', controllers.deleteArtist);
+router
+  .route('/artists/:id')
+  .get(readSingleArtist)
+  .put(updateArtist)
+  .patch(patchArtist)
+  .delete(deleteArtist);
 
 module.exports = router;

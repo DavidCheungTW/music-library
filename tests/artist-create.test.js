@@ -1,4 +1,3 @@
-// tests/artist-create.test.js
 const { expect } = require('chai');
 
 const request = require('supertest');

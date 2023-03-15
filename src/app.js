@@ -7,6 +7,7 @@ var swaggerUi = require('swagger-ui-express');
 const path = require('path');
 
 app.use(express.json());
+app.use(express.static('public'));
 
 // ------ Configure swagger docs ------
 var options = {
@@ -23,9 +24,9 @@ var swaggerSpecs = swaggerJsdoc(options);
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
-// app.get('/', (req, res) => {
-//   res.status(200).json({ result: 'hello world!' });
-// });
+app.get('/', (req, res) => {
+  res.status(200).json({ result: 'Welcome to Music library!' });
+});
 
 // $$$ my testing $$$
 // app.get('/hello', (req, res) => {

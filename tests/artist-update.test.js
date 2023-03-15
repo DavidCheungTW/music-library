@@ -1,4 +1,3 @@
-// test/artist-update.test.js
 const { expect } = require('chai');
 const request = require('supertest');
 const db = require('../src/db');
@@ -91,7 +90,8 @@ describe('Patch Artist', () => {
       const { status, body } = await request(app)
         .patch('/artists/999999999')
         .send({ name: 'something different', genre: 'rock' });
-
+      // console.log(status);
+      // console.log(body.message);
       expect(status).to.equal(404);
       expect(body.message).to.equal('artist 999999999 does not exist');
     });

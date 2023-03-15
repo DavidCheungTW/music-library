@@ -2,7 +2,8 @@
 
 Music Library - an API exercise for Express, Postgres database and **CRUD** operations.
 
-- [Music library deployment](https://dashboard.render.com/)
+- [deployment URL](https://music-library-dav-oct22.onrender.com)
+- [swagger URL](https://music-library-dav-oct22.onrender.com/swagger)
 
 ## Project setup
 
@@ -123,6 +124,7 @@ For production libraries
 - [SQL Injection](https://www.veracode.com/blog/secure-development/how-prevent-sql-injection-nodejs)
 - [testing with github actions](https://docs.github.com/en/actions/quickstart)
 - [render doc](https://render.com/docs/)
+- [deployment site](https://dashboard.render.com/)
 
 ## Credits
 

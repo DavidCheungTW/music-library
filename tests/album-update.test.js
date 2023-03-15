@@ -1,4 +1,3 @@
-// test/album-update.test.js
 const { expect } = require('chai');
 const request = require('supertest');
 const db = require('../src/db');
@@ -19,20 +18,20 @@ describe('Update album', () => {
 
     responses = await Promise.all([
       db.query(
-        'INSERT INTO album (name, year, artistid) VALUES( $1, $2,$3) RETURNING *',
-        ['first album', 1990, artistid]
+        'INSERT INTO album (name, year, artistid,cover_image) VALUES( $1, $2,$3,$4) RETURNING *',
+        ['first album', 1990, artistid, '']
       ),
       db.query(
-        'INSERT INTO album (name, year, artistid) VALUES( $1, $2,$3) RETURNING *',
-        ['second album', 1995, artistid]
+        'INSERT INTO album (name, year, artistid,cover_image) VALUES( $1, $2,$3,$4) RETURNING *',
+        ['second album', 1995, artistid, '']
       ),
       db.query(
-        'INSERT INTO album (name, year, artistid) VALUES( $1, $2,$3) RETURNING *',
-        ['third album', 2000, artistid]
+        'INSERT INTO album (name, year, artistid,cover_image) VALUES( $1, $2,$3,$4) RETURNING *',
+        ['third album', 2000, artistid, '']
       ),
       db.query(
-        'INSERT INTO album (name, year, artistid) VALUES( $1, $2,$3) RETURNING *',
-        ['fourth album', 2005, artistid]
+        'INSERT INTO album (name, year, artistid,cover_image) VALUES( $1, $2,$3,$4) RETURNING *',
+        ['fourth album', 2005, artistid, '']
       ),
     ]);
     albums = responses.map(({ rows }) => rows[0]);
@@ -50,6 +49,7 @@ describe('Update album', () => {
         name: 'something different',
         year: 1991,
         artistid: album.artistid,
+        cover_image: '',
       });
     });
   });
@@ -70,20 +70,20 @@ describe('Patch album', () => {
 
     responses = await Promise.all([
       db.query(
-        'INSERT INTO album (name, year, artistid) VALUES( $1, $2,$3) RETURNING *',
-        ['first album', 1990, artistid]
+        'INSERT INTO album (name, year, artistid,cover_image) VALUES( $1, $2,$3,$4) RETURNING *',
+        ['first album', 1990, artistid, '']
       ),
       db.query(
-        'INSERT INTO album (name, year, artistid) VALUES( $1, $2,$3) RETURNING *',
-        ['second album', 1995, artistid]
+        'INSERT INTO album (name, year, artistid,cover_image) VALUES( $1, $2,$3,$4) RETURNING *',
+        ['second album', 1995, artistid, '']
       ),
       db.query(
-        'INSERT INTO album (name, year, artistid) VALUES( $1, $2,$3) RETURNING *',
-        ['third album', 2000, artistid]
+        'INSERT INTO album (name, year, artistid,cover_image) VALUES( $1, $2,$3,$4) RETURNING *',
+        ['third album', 2000, artistid, '']
       ),
       db.query(
-        'INSERT INTO album (name, year, artistid) VALUES( $1, $2,$3) RETURNING *',
-        ['fourth album', 2005, artistid]
+        'INSERT INTO album (name, year, artistid,cover_image) VALUES( $1, $2,$3,$4) RETURNING *',
+        ['fourth album', 2005, artistid, '']
       ),
     ]);
     albums = responses.map(({ rows }) => rows[0]);
@@ -101,6 +101,7 @@ describe('Patch album', () => {
         name: 'something different',
         year: 1990,
         artistid: album.artistid,
+        cover_image: '',
       });
     });
     it('updates any one key of album and returns the updated record', async () => {
@@ -113,6 +114,7 @@ describe('Patch album', () => {
         name: 'something different',
         year: 1990,
         artistid: album.artistid,
+        cover_image: '',
       });
     });
     it('updates any keys of album and returns the updated record', async () => {
@@ -125,6 +127,7 @@ describe('Patch album', () => {
         name: 'something different',
         year: 1991,
         artistid: album.artistid,
+        cover_image: '',
       });
     });
     it('returns a 404 if any key of album does not exist', async () => {

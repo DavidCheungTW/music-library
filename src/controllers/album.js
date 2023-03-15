@@ -1,4 +1,5 @@
 const db = require('../db/index.js'); // define Pool from pg
+const uploadFile = require('../utils/upload-file');
 
 exports.albumController = (req, res) => {
   res.status(201).json({
@@ -8,16 +9,35 @@ exports.albumController = (req, res) => {
 };
 
 exports.createAlbum = async (req, res) => {
+  const { file } = req;
   const { id } = req.params;
   const { name, year } = req.body;
   try {
+    let cover_image = '';
+    // for npm start
+    // cover_image = await uploadFile(file);
     const {
       rows: [album],
     } = await db.query(
-      `INSERT INTO album (name, year,artistid) VALUES ($1,$2,$3) RETURNING *`,
-      [name, year, id]
+      `INSERT INTO album (name, year,artistid,cover_image) VALUES ($1,$2,$3,$4) RETURNING *`,
+      [name, year, id, cover_image]
     );
     res.status(201).json(album);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+};
+
+exports.getArtistAlbums = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rows } = await db.query('SELECT * FROM album WHERE artistid = $1', [
+      id,
+    ]);
+    if (!rows) {
+      return res.status(404).json({ message: `album ${id} does not exist` });
+    }
+    res.status(200).json(rows);
   } catch (err) {
     res.status(500).json(err.message);
   }
